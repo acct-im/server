@@ -35,13 +35,6 @@ app.get('/.well-known/webfinger', (req, res) => {
     res.status(404).send('Unrecognized resource')
   }
 
-  switch(host.split('.')[0]) {
-    case 'github':
-
-      break
-    default:
-      res.status(404).send('Unrecognized website')
-  }
 })
 
 app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
