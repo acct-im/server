@@ -1,0 +1,24 @@
+{
+  "name": "acct.im",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acct-im/server.git"
+  },
+  "author": "onyxblade",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/acct-im/server/issues"
+  },
+  "homepage": "https://github.com/acct-im/server#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0",
+    "redis": "^3.0.2"
+  }
+}
