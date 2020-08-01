@@ -15,27 +15,29 @@ async function fetchTargetAccount(acct) {
 
 app.get('/.well-known/webfinger', (req, res) => {
   let host = req.headers.host
-  switch(host.split('.')[0]) {
-    case 'github':
-      let resource = req.query.resource
-      let match = resource.match(/acct:(.+?)@github/)
-      if (match) {
-        let id = match[1]
-        fetch(`https://raw.githubusercontent.com/${id}/acct.im/master/target`).then(response => {
-          if (response.ok) {
-            response.text().then(body => {
-              fetchTargetAccount(body.replace(/\s/g, '')).then(json => {
-                let ret = Object.assign({}, json, {subject: resource})
-                res.send(ret)
-              })
-            })
-          } else {
-            res.status(response.status).send(response.statusText)
-          }
+  let resource = req.query.resource
+  let match = resource.match(/acct:(.+?)@/)
+  if (match) {
+    let id = match[1]
+    fetch(`https://raw.githubusercontent.com/${id}/acct.im/master/target`).then(response => {
+      if (response.ok) {
+        response.text().then(body => {
+          fetchTargetAccount(body.replace(/\s/g, '')).then(json => {
+            let ret = Object.assign({}, json, {subject: resource})
+            res.send(ret)
+          })
         })
       } else {
-        res.status(404).send('Unrecognized resource')
+        res.status(response.status).send(response.statusText)
       }
+    })
+  } else {
+    res.status(404).send('Unrecognized resource')
+  }
+
+  switch(host.split('.')[0]) {
+    case 'github':
+
       break
     default:
       res.status(404).send('Unrecognized website')
